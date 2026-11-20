@@ -33,9 +33,9 @@
   <meta name="theme-color" content="#edf1f5">
   <meta name="description" content="Интерактивная модель жилого комплекса. Выберите башню, чтобы посмотреть квартиры с 3D-турами.">
   <title>Жилой комплекс — 3D-туры по квартирам</title>
-  <link rel="icon" href="data:,">
-  <script type="module" crossorigin src="./assets/index-DySmx3cn.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-D59-q67K.css">
+  <link rel="icon" href="data:,">
+  <script type="module" crossorigin src="./assets/index-De4Kj6by.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Cn_dSufC.css">
 </head>
 <body>
   <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute">
@@ -49,15 +49,14 @@
   </svg>
   <main id="viewport" aria-label="Интерактивная 3D-модель жилого комплекса"></main>
   <header class="topbar">
-    <a class="brand" href="./" aria-label="Жилой комплекс — главный вид">Жилой комплекс</a>
+    <button id="tour-tower-back" type="button" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12H3m6-6-6 6 6 6"/></svg>
+      <span>К общему виду</span>
+    </button>
     <section class="focus-context" aria-label="Выбор квартиры">
       <div class="eyebrow">ВЫБОР КВАРТИРЫ</div>
       <h1 id="focus-title">Выберите башню</h1>
       <div class="tower-controls">
-        <button id="tour-tower-back" type="button" hidden>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12H3m6-6-6 6 6 6"/></svg>
-          Все башни
-        </button>
         <nav class="tower-selector" aria-label="Выбор башни">
           <button type="button" data-tower="A" aria-label="Башня A" aria-pressed="false"><span class="tower-letter" aria-hidden="true">A</span><span class="tower-name">Башня A</span></button>
           <button type="button" data-tower="B" aria-label="Башня B" aria-pressed="false"><span class="tower-letter" aria-hidden="true">B</span><span class="tower-name">Башня B</span></button>
@@ -65,40 +64,52 @@
         </nav>
       </div>
     </section>
+    <button id="viewer-help" class="viewer-help" type="button" hidden aria-label="Как пользоваться вьюером" aria-controls="onboarding" aria-expanded="false"><span class="viewer-help-symbol" aria-hidden="true">?</span><span class="viewer-help-label">Как пользоваться</span></button>
   </header>
   <button id="keyboard-apartment-open" type="button" disabled aria-haspopup="dialog" aria-controls="keyboard-apartment-dialog">Выбрать квартиру с клавиатуры</button>
-  <button id="viewer-help" class="viewer-help" type="button" hidden aria-label="Как пользоваться вьюером" aria-controls="onboarding" aria-expanded="false"><span class="viewer-help-symbol" aria-hidden="true">?</span><span class="viewer-help-label">Как пользоваться</span></button>
   <div id="onboarding-cue" class="onboarding-cue" hidden aria-hidden="true">
-    <span id="onboarding-tap" class="onboarding-tap">
-      <span class="onboarding-gesture">
-        <svg class="onboarding-click-arcs" viewBox="-28 -28 56 56" width="56" height="56" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true" focusable="false">
-          <path class="onboarding-click-arc onboarding-click-arc-inner" d="M -10 12 A 14 14 0 1 1 10 12" vector-effect="non-scaling-stroke"/>
-          <path class="onboarding-click-arc onboarding-click-arc-outer" d="M -15 17 A 21 21 0 1 1 15 17" vector-effect="non-scaling-stroke"/>
-        </svg>
-        <span class="onboarding-hand"><img id="onboarding-hand" src="./onboarding-hand-filled.png" alt="" width="72" height="72" draggable="false"></span>
-      </span>
-    </span>
+    <div id="onboarding-spotlight"></div>
+    <div id="onboarding-hand">
+      <span class="onboarding-tap-marks"><i></i><i></i><i></i></span>
+      <img src="./onboarding-hand.png" alt="" draggable="false">
+    </div>
   </div>
   <section id="onboarding" class="onboarding" hidden aria-labelledby="onboarding-title">
-    <div aria-live="polite" aria-atomic="true"><span id="onboarding-progress" class="onboarding-progress"></span><h2 id="onboarding-title"></h2><p id="onboarding-description"></p><ol id="onboarding-details" class="onboarding-details" hidden><li data-detail="1"><span aria-hidden="true">1</span>Планировка на весь экран.</li><li data-detail="2"><span aria-hidden="true">2</span>План этажа с вашей квартирой.</li><li data-detail="3"><span aria-hidden="true">3</span>3D-тур по квартире.</li></ol></div>
-    <div class="onboarding-footer"><span class="onboarding-dots" aria-hidden="true"><i></i><i></i><i></i></span><button id="onboarding-skip" type="button">Пропустить</button></div>
+    <div class="onboarding-content" aria-live="polite" aria-atomic="true">
+      <span id="onboarding-progress"></span>
+      <h2 id="onboarding-title"></h2>
+      <p id="onboarding-description"></p>
+    </div>
+    <div class="onboarding-footer">
+      <button id="onboarding-skip" type="button">Пропустить</button>
+    </div>
   </section>
-  <aside id="tour-dock" aria-labelledby="tour-list-title" hidden>
+  <aside id="tour-dock" aria-labelledby="tour-tower-title" hidden>
+    <button id="tour-sheet-handle" type="button" aria-controls="tour-sheet-content" aria-expanded="false">
+      <span id="tour-sheet-title">Квартиры</span>
+    </button>
+    <div id="tour-sheet-content">
     <section id="tour-catalog" class="tour-dock-view">
       <header class="tour-dock-header">
         <h1 id="tour-tower-title" tabindex="-1"></h1>
-        <h2 id="tour-list-title">Квартиры с 3D-турами</h2>
+        <div class="artwork-menu" role="group" aria-label="Разделы каталога">
+          <button id="show-tour-list" type="button" aria-pressed="true" aria-controls="tour-list-scroll">3D-туры</button>
+          <button id="show-section-list" type="button" aria-pressed="false" aria-controls="section-list-scroll">3D-разрезы</button>
+        </div>
         <label class="tour-highlight-control" hidden>
-          Подсветить квартиры с 3D-турами
+          Подсветить на фасаде
           <input id="tour-highlight-switch" type="checkbox" role="switch" autocomplete="off">
         </label>
       </header>
-      <div id="tour-list-scroll" class="tour-dock-scroll" role="region" aria-labelledby="tour-list-title" tabindex="0">
+      <div id="tour-list-scroll" class="tour-dock-scroll" role="region" aria-labelledby="show-tour-list" tabindex="0">
         <div id="tour-list-notice" class="tour-list-notice">
           <p id="tour-list-message" role="status"></p>
           <button id="tour-list-retry" class="tour-action" type="button" hidden>Повторить загрузку</button>
         </div>
         <ul id="tour-list-rows" class="tour-list-rows" role="list"></ul>
+      </div>
+      <div id="section-list-scroll" class="tour-dock-scroll" role="region" aria-labelledby="show-section-list" tabindex="0" hidden>
+        <ul id="section-list-rows" class="tour-list-rows" role="list"></ul>
       </div>
     </section>
     <section id="tour-details" class="tour-dock-view" hidden>
@@ -108,9 +119,8 @@
           К списку квартир
         </button>
       </header>
-      <div id="tour-details-scroll" class="tour-dock-scroll" role="region" aria-labelledby="unit-title" tabindex="0">
-        <h1 id="unit-title" tabindex="-1"></h1>
-        <p id="unit-type" class="tour-details-type"></p>
+      <div id="tour-details-scroll" class="tour-dock-scroll" role="region" aria-labelledby="unit-type" tabindex="0">
+        <h1 id="unit-type" class="tour-details-type" tabindex="-1" aria-describedby="unit-meta unit-layout"></h1>
         <p id="unit-meta" class="tour-details-meta"></p>
         <dl id="unit-layout" class="tour-details-layout" hidden>
           <dt>Тип планировки</dt>
@@ -129,12 +139,17 @@
           <span class="tour-action-label">План этажа</span>
           <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2 3h8l3 3 3-3h8v22H2Zm11 3v19M6 7v5m13-5v7M6 18v3"/></svg>
         </button>
+        <button id="open-section" class="tour-action" type="button" aria-haspopup="dialog" aria-controls="lot-section-dialog" hidden>
+          <span class="tour-action-label">3D-разрез</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7Zm0 10 9-5M3 7l9 5v10"/></svg>
+        </button>
         <button id="open-tour" class="tour-action tour-action-open" type="button" hidden>
           <span class="tour-action-label">Открыть 3D-тур</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18m-6-6 6 6-6 6"/></svg>
         </button>
       </footer>
     </section>
+    </div>
   </aside>
   <template id="tour-row-template">
     <li class="tour-row">
@@ -170,8 +185,63 @@
     </div>
   </div>
   <div id="error" class="glass" hidden role="alert"><span class="eyebrow">ПРОСМОТР НЕДОСТУПЕН</span><h2>Не удалось открыть модель</h2><p id="error-message"></p><button onclick="location.reload()" class="primary">Попробовать ещё раз <span aria-hidden="true">↻</span></button></div>
-  <dialog id="plan-dialog" aria-labelledby="plan-title"><div class="dialog-header"><div><h2 id="plan-title">План этажа</h2><p id="plan-unit-details"></p></div><button id="close-plan" class="round" aria-label="Закрыть план">×</button></div><div class="plan-image plan-artwork"><svg id="plan-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Выбранная квартира на плане этажа"><image id="plan-image"/><polygon id="plan-footprint" fill="#447aff" fill-opacity=".23" stroke="#164fc7" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></div><div id="floor-plan-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div><p>На плане выделена выбранная квартира.</p></dialog>
-  <dialog id="apartment-plan-dialog" aria-labelledby="apartment-plan-title"><div class="dialog-header"><div><span class="eyebrow">ПЛАНИРОВКА КВАРТИРЫ</span><h2 id="apartment-plan-title"></h2></div><button id="close-apartment-plan" class="round" aria-label="Закрыть планировку">×</button></div><div id="apartment-plan-variants" class="plan-variants" hidden><button id="apartment-plan-previous" type="button" aria-label="Предыдущий вариант планировки">←</button><span id="apartment-plan-count" aria-live="polite"></span><button id="apartment-plan-next" type="button" aria-label="Следующий вариант планировки">→</button></div><div class="plan-artwork plan-artwork--apartment"><img id="apartment-plan-large" alt=""></div><div id="apartment-plan-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div></dialog>
+  <dialog id="plan-dialog" aria-labelledby="plan-title">
+    <div class="dialog-header">
+      <div><h2 id="plan-title">План этажа</h2><p id="plan-unit-details"></p></div>
+      <button id="close-plan" class="round" type="button" aria-label="Закрыть план">
+        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="plan-image plan-artwork"><svg id="plan-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Выбранная квартира на плане этажа"><image id="plan-image"/><polygon id="plan-footprint" fill="#303634" fill-opacity=".22" stroke="#303634" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></div>
+    <div id="floor-plan-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div>
+    <p class="artwork-guide-note artwork-guide-note--floor">
+      На плане выделена выбранная квартира.
+      <span class="artwork-guide-zoom">Масштаб — кнопками + и − или двумя пальцами. Увеличенный чертёж можно перетаскивать. «Вписать» покажет его целиком.</span>
+    </p>
+  </dialog>
+  <dialog id="apartment-plan-dialog" aria-labelledby="apartment-plan-title">
+    <div class="dialog-header">
+      <div><span class="eyebrow">ПЛАНИРОВКА КВАРТИРЫ</span><h2 id="apartment-plan-title"></h2></div>
+      <button id="close-apartment-plan" class="round" type="button" aria-label="Закрыть планировку">
+        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div id="apartment-plan-variants" class="plan-variants" hidden>
+      <button id="apartment-plan-previous" type="button" aria-label="Предыдущий вариант планировки">
+        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+      </button>
+      <span id="apartment-plan-count" aria-live="polite"></span>
+      <button id="apartment-plan-next" type="button" aria-label="Следующий вариант планировки">
+        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="plan-artwork plan-artwork--apartment"><img id="apartment-plan-large" alt=""></div>
+    <div id="apartment-plan-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div>
+    <p class="artwork-guide-note">Масштаб — кнопками + и − или двумя пальцами. Увеличенный чертёж можно перетаскивать. «Вписать» покажет его целиком.</p>
+  </dialog>
+  <dialog id="lot-section-dialog" aria-labelledby="lot-section-title" aria-describedby="lot-section-context">
+    <div class="dialog-header">
+      <div>
+        <h2 id="lot-section-title">3D-разрез</h2>
+        <p id="lot-section-context"></p>
+      </div>
+      <button id="close-lot-section" class="round" type="button" aria-label="Закрыть 3D-разрез" autofocus>
+        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div id="lot-section-variants" class="plan-variants" hidden>
+      <button id="lot-section-previous" type="button" aria-label="Предыдущий разрез">
+        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+      </button>
+      <span id="lot-section-count" aria-live="polite"></span>
+      <button id="lot-section-next" type="button" aria-label="Следующий разрез">
+        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div id="lot-section-artwork" class="plan-artwork plan-artwork--apartment" hidden><img id="lot-section-image" alt=""></div>
+    <div id="lot-section-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div>
+    <p class="artwork-guide-note">Масштаб — кнопками + и − или двумя пальцами. Увеличенный чертёж можно перетаскивать. «Вписать» покажет его целиком.</p>
+  </dialog>
   <div id="tour-transition" hidden role="status" aria-live="polite"><div class="tour-transition-content"><span class="transition-orbit" aria-hidden="true"></span><div><span class="eyebrow">ОТКРЫВАЕМ 3D-ТУР</span><p>Переходим на страницу тура</p></div><button id="cancel-tour" class="secondary">Отменить</button></div></div>
   <button id="walk-marker" type="button" hidden aria-label="Перетащить человечка на территорию и начать прогулку" title="Перетащите на территорию для прогулки"><span class="walk-person" aria-hidden="true">●<i></i></span><span>Прогуляться</span></button>
   <div id="walk-ghost" hidden aria-hidden="true"><span class="walk-person">●<i></i></span></div>
@@ -184,7 +254,6 @@
       <label for="keyboard-unit">Квартира</label><select id="keyboard-unit" name="apartment" required></select>
       <button class="primary" type="submit">Показать квартиру</button>
     </form>
-  </dialog>
+  </dialog>
 </body>
 </html>
-
