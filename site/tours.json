@@ -1,0 +1,31 @@
+{
+  "byApartment": {},
+  "byLayout": {
+    "1К-2": { "url": "https://kislaa.ru/tour1k/", "label": "Тур 1К-2", "plan": "./apartment-plans/1k-2.webp" },
+    "1К-2*": { "url": "https://kislaa.ru/tour1k/", "label": "Тур 1К-2*", "plan": "./apartment-plans/1k-2-star.webp" },
+    "4Е-1-1": {
+      "url": "https://kislaa.ru/tour3k/",
+      "label": "Тур 3К",
+      "plan": ["./apartment-plans/4e-1-1-variant-1.webp", "./apartment-plans/4e-1-1-variant-2.webp"]
+    },
+    "4Е-1-1*": {
+      "url": "https://kislaa.ru/tour3k/",
+      "label": "Тур 3К",
+      "plan": ["./apartment-plans/4e-1-1-variant-1.webp", "./apartment-plans/4e-1-1-variant-2.webp"]
+    },
+    "5Е-1": { "url": "https://kislaa.ru/tour5k/", "label": "Тур 5Е-1", "plan": "./apartment-plans/5e-1.webp" },
+    "5Е-1*": { "url": "https://kislaa.ru/tour5k/", "label": "Тур 5Е-1*", "plan": "./apartment-plans/5e-1-star.webp" },
+    "5Е-2": {
+      "url": "https://kislaa.ru/tour5k/",
+      "label": "Тур 5К",
+      "plan": ["./apartment-plans/tour5k-variant-1.webp", "./apartment-plans/pdf/page-131.webp", "./apartment-plans/pdf/page-132.webp"]
+    },
+    "5Е-2*": {
+      "url": "https://kislaa.ru/tour5k/",
+      "label": "Тур 5К",
+      "plan": ["./apartment-plans/tour5k-variant-2.webp", "./apartment-plans/pdf/page-141.webp"]
+    },
+    "3Е-11-1": { "url": "https://kislaa.ru/tour2k/", "label": "Тур 3Е-11-1", "plan": "./apartment-plans/3e-11-1.webp" },
+    "3Е-11-1*": { "url": "https://kislaa.ru/tour2k/", "label": "Тур 3Е-11-1*", "plan": "./apartment-plans/3e-11-1-star.webp" }
+  }
+}
