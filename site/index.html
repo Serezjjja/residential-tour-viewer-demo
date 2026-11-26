@@ -34,8 +34,8 @@
   <meta name="description" content="Интерактивная модель жилого комплекса. Выберите башню, чтобы посмотреть квартиры с 3D-турами.">
   <title>Жилой комплекс — 3D-туры по квартирам</title>
   <link rel="icon" href="data:,">
-  <script type="module" crossorigin src="./assets/index-De4Kj6by.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-Cn_dSufC.css">
+  <script type="module" crossorigin src="./assets/index-CKin8Fp7.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BYapCLuc.css">
 </head>
 <body>
   <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute">
@@ -129,17 +129,17 @@
         <div id="apartment-plan" class="apartment-plan" hidden>
           <button id="expand-apartment-plan" class="plan-expand" type="button" aria-label="Увеличить планировку" aria-haspopup="dialog" aria-controls="apartment-plan-dialog">
             <span class="apartment-plan-heading">Планировка <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3H3v6m0-6 7 7m5 11h6v-6m0 6-7-7"/></svg></span>
-            <img id="apartment-plan-image" alt="" decoding="async" hidden>
+            <img id="apartment-plan-image" alt="" decoding="async" draggable="false" hidden>
           </button>
           <div id="apartment-plan-preview-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div>
         </div>
       </div>
       <footer class="unit-actions">
-        <button id="open-plan" class="tour-action" type="button" aria-haspopup="dialog" aria-controls="plan-dialog">
+        <button id="open-plan" class="tour-action" type="button" aria-haspopup="dialog" aria-controls="apartment-plan-dialog">
           <span class="tour-action-label">План этажа</span>
           <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M2 3h8l3 3 3-3h8v22H2Zm11 3v19M6 7v5m13-5v7M6 18v3"/></svg>
         </button>
-        <button id="open-section" class="tour-action" type="button" aria-haspopup="dialog" aria-controls="lot-section-dialog" hidden>
+        <button id="open-section" class="tour-action" type="button" aria-haspopup="dialog" aria-controls="apartment-plan-dialog" hidden>
           <span class="tour-action-label">3D-разрез</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7Zm0 10 9-5M3 7l9 5v10"/></svg>
         </button>
@@ -153,7 +153,7 @@
   </aside>
   <template id="tour-row-template">
     <li class="tour-row">
-      <img class="tour-row-plan" alt="" loading="lazy" decoding="async" hidden>
+      <img class="tour-row-plan" alt="" loading="lazy" decoding="async" draggable="false" hidden>
       <div class="tour-row-info">
         <h3 class="tour-row-title"></h3>
         <p class="tour-row-meta"></p>
@@ -185,62 +185,41 @@
     </div>
   </div>
   <div id="error" class="glass" hidden role="alert"><span class="eyebrow">ПРОСМОТР НЕДОСТУПЕН</span><h2>Не удалось открыть модель</h2><p id="error-message"></p><button onclick="location.reload()" class="primary">Попробовать ещё раз <span aria-hidden="true">↻</span></button></div>
-  <dialog id="plan-dialog" aria-labelledby="plan-title">
+  <dialog id="apartment-plan-dialog" aria-labelledby="apartment-plan-title" aria-describedby="apartment-plan-context">
     <div class="dialog-header">
-      <div><h2 id="plan-title">План этажа</h2><p id="plan-unit-details"></p></div>
-      <button id="close-plan" class="round" type="button" aria-label="Закрыть план">
+      <div><h2 id="apartment-plan-title" aria-live="polite"></h2><p id="apartment-plan-context"></p></div>
+      <button id="close-apartment-plan" class="round" type="button" aria-label="Закрыть просмотр" autofocus>
         <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
-    <div class="plan-image plan-artwork"><svg id="plan-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Выбранная квартира на плане этажа"><image id="plan-image"/><polygon id="plan-footprint" fill="#303634" fill-opacity=".22" stroke="#303634" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></div>
-    <div id="floor-plan-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div>
-    <p class="artwork-guide-note artwork-guide-note--floor">
-      На плане выделена выбранная квартира.
-      <span class="artwork-guide-zoom">Масштаб — кнопками + и − или двумя пальцами. Увеличенный чертёж можно перетаскивать. «Вписать» покажет его целиком.</span>
-    </p>
-  </dialog>
-  <dialog id="apartment-plan-dialog" aria-labelledby="apartment-plan-title">
-    <div class="dialog-header">
-      <div><span class="eyebrow">ПЛАНИРОВКА КВАРТИРЫ</span><h2 id="apartment-plan-title"></h2></div>
-      <button id="close-apartment-plan" class="round" type="button" aria-label="Закрыть планировку">
-        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
-    </div>
-    <div id="apartment-plan-variants" class="plan-variants" hidden>
-      <button id="apartment-plan-previous" type="button" aria-label="Предыдущий вариант планировки">
-        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
-      </button>
-      <span id="apartment-plan-count" aria-live="polite"></span>
-      <button id="apartment-plan-next" type="button" aria-label="Следующий вариант планировки">
-        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
-      </button>
-    </div>
-    <div class="plan-artwork plan-artwork--apartment"><img id="apartment-plan-large" alt=""></div>
-    <div id="apartment-plan-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div>
-    <p class="artwork-guide-note">Масштаб — кнопками + и − или двумя пальцами. Увеличенный чертёж можно перетаскивать. «Вписать» покажет его целиком.</p>
-  </dialog>
-  <dialog id="lot-section-dialog" aria-labelledby="lot-section-title" aria-describedby="lot-section-context">
-    <div class="dialog-header">
-      <div>
-        <h2 id="lot-section-title">3D-разрез</h2>
-        <p id="lot-section-context"></p>
+    <div id="artwork-stage" class="artwork-stage">
+      <div class="artwork-slide" data-artwork-slide="plan" hidden>
+        <div class="artwork-slide-body">
+          <div class="plan-artwork plan-artwork--apartment"><img id="apartment-plan-large" alt=""></div>
+          <div id="apartment-plan-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div>
+        </div>
       </div>
-      <button id="close-lot-section" class="round" type="button" aria-label="Закрыть 3D-разрез" autofocus>
-        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
+      <div class="artwork-slide" data-artwork-slide="section" hidden>
+        <div class="artwork-slide-body">
+          <div id="lot-section-artwork" class="plan-artwork plan-artwork--apartment" hidden><img id="lot-section-image" alt=""></div>
+          <div id="lot-section-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div>
+        </div>
+      </div>
+      <div class="artwork-slide artwork-slide--floor" data-artwork-slide="floor" hidden>
+        <div class="artwork-slide-body">
+          <div class="plan-image plan-artwork"><svg id="plan-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Выбранная квартира на плане этажа"><image id="plan-image"/><polygon id="plan-footprint" fill="#303634" fill-opacity=".22" stroke="#303634" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></div>
+          <div id="floor-plan-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div>
+          <p class="artwork-floor-note">На плане выделена выбранная квартира.</p>
+        </div>
+      </div>
     </div>
-    <div id="lot-section-variants" class="plan-variants" hidden>
-      <button id="lot-section-previous" type="button" aria-label="Предыдущий разрез">
-        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
-      </button>
-      <span id="lot-section-count" aria-live="polite"></span>
-      <button id="lot-section-next" type="button" aria-label="Следующий разрез">
-        <svg class="artwork-button-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
-      </button>
-    </div>
-    <div id="lot-section-artwork" class="plan-artwork plan-artwork--apartment" hidden><img id="lot-section-image" alt=""></div>
-    <div id="lot-section-status" class="plan-load-status" role="status" hidden><p></p><button class="secondary" type="button" hidden>Попробовать ещё раз</button></div>
-    <p class="artwork-guide-note">Масштаб — кнопками + и − или двумя пальцами. Увеличенный чертёж можно перетаскивать. «Вписать» покажет его целиком.</p>
+    <nav id="artwork-navigation" class="artwork-navigation" aria-label="Материалы квартиры" hidden>
+      <div class="artwork-navigation-dots" role="group" aria-label="Выбрать материал">
+        <button type="button" data-artwork-target="plan" aria-label="Планировка квартиры" title="Планировка квартиры" hidden><span></span></button>
+        <button type="button" data-artwork-target="section" aria-label="3D-разрез" title="3D-разрез" hidden><span></span></button>
+        <button type="button" data-artwork-target="floor" aria-label="План этажа" title="План этажа" hidden><span></span></button>
+      </div>
+    </nav>
   </dialog>
   <div id="tour-transition" hidden role="status" aria-live="polite"><div class="tour-transition-content"><span class="transition-orbit" aria-hidden="true"></span><div><span class="eyebrow">ОТКРЫВАЕМ 3D-ТУР</span><p>Переходим на страницу тура</p></div><button id="cancel-tour" class="secondary">Отменить</button></div></div>
   <button id="walk-marker" type="button" hidden aria-label="Перетащить человечка на территорию и начать прогулку" title="Перетащите на территорию для прогулки"><span class="walk-person" aria-hidden="true">●<i></i></span><span>Прогуляться</span></button>
